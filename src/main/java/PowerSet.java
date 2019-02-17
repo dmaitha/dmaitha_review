@@ -125,40 +125,40 @@ public class PowerSet
      * is not initialized
      */
     // implementation 3
-        public static Set<Set<Integer>> powerSetImplementation3(int[] S) 
+    public static Set<List<Integer>> powerSetImplementation3(int[] S){
+    	if(S == null) {
+    		throw new NullPointerException(); 
+    	   	}
+        List<Integer> arrayList = new ArrayList<Integer>();
+        for (int index = 0; index < S.length; index++)
         {
-        	if(S == null) 
-        	{
-        		return new HashSet<Set<Integer>>();
-        	}
-            List<Integer> arrayList = new ArrayList<Integer>();
-            for (int index = 0; index < S.length; index++)
-            {
-                arrayList.add(S[index]);
+            arrayList.add(S[index]);
+        }
+        Set<List<Integer>> ps = new HashSet<List<Integer>>();
+
+          ps.add(new ArrayList<Integer>());   
+
+
+          // for every item in the original list
+          for (Integer item : arrayList) {
+              Set<List<Integer>> newPs = new HashSet<List<Integer>>();
+
+            for (List<Integer> subset : ps) {
+              // copy all of the current powerset's subsets
+              newPs.add(subset);
+
+              // plus the subsets appended with the current item
+
+              List<Integer> newSubset = new ArrayList<Integer>(subset);
+
+              newSubset.add(item);
+              newPs.add(newSubset);
             }
-            Set<Set<Integer>> ps = new HashSet<Set<Integer>>();
-              ps.add(new HashSet<Integer>());   // add the empty set
 
-              // for every item in the original list
-              for (Integer item : arrayList) 
-              {
-                  Set<Set<Integer>> newPs = new HashSet<Set<Integer>>();
-
-                for (Set<Integer> subset : ps) 
-                {
-                  // copy all of the current powerset's subsets
-                  newPs.add(subset);
-
-                  // plus the subsets appended with the current item
-                  Set<Integer> newSubset = new HashSet<Integer>(subset);
-                  newSubset.add(item);
-                  newPs.add(newSubset);
-                }
-
-                // powerset is now powerset of list.subList(0, list.indexOf(item)+1)
-                ps = newPs;
-              }
-              return ps;
+            // powerset is now powerset of list.subList(0, list.indexOf(item)+1)
+            ps = newPs;
+          }
+          return ps;
         }
 }
 // end of file
